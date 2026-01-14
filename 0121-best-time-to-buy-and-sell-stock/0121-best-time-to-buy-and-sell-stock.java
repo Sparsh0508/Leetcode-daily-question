@@ -1,28 +1,26 @@
 class Solution {
+    Integer[][] dp;
     public int maxProfit(int[] prices) {
-        int n = prices.length;
-        Integer[][] dp = new Integer[n+1][2];
-        return help(prices,dp,0,1);
+        dp = new Integer[prices.length][2];
+        return help(prices,0,1);
     }
-    public static int help(int[] arr,Integer[][] dp,int idx,int canBuy){
-        if(idx == arr.length){
+    public int help(int[] prices,int idx,int buy){
+        if(prices.length == idx ){
             return 0;
         }
-        if(dp[idx][canBuy] != null){
-            return dp[idx][canBuy];
+        if(dp[idx][buy] != null){
+            return dp[idx][buy];
         }
         int profit = 0;
-        if(canBuy == 1){
-            int buy = -arr[idx] + help(arr,dp,idx+1,0);
-            int skip = help(arr,dp,idx+1,1);
-            profit = Math.max(buy,skip);
-        }
-        else{
-            int sell = arr[idx];
-            int skip = help(arr,dp,idx+1,0);
+        if(buy == 1){
+            int take = -prices[idx] + help(prices,idx+1,0);
+            int skip = help(prices,idx+1,1);
+            profit = Math.max(take,skip);
+        }else{
+            int sell = prices[idx];
+            int skip = help(prices,idx+1,0);
             profit = Math.max(sell,skip);
         }
-        return dp[idx][canBuy] = profit;
-
+        return dp[idx][buy] = profit;
     }
 }
