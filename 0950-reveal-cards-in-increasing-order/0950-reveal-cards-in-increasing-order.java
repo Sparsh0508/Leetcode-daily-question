@@ -1,9 +1,8 @@
 class Solution {
     public int[] deckRevealedIncreasing(int[] deck) {
         Arrays.sort(deck);
-
         int[] res = new int[deck.length];
-        Deque<Integer> q = new LinkedList<>();
+        Queue<Integer> q = new LinkedList<>();
         for(int i = 0;i<deck.length;i++){
             q.add(i);
         }
