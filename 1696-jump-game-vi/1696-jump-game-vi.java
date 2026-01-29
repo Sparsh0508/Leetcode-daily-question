@@ -1,31 +1,27 @@
 class Solution {
-    Integer[] dp;
-
     public int maxResult(int[] nums, int k) {
-        dp = new Integer[nums.length];
-        return help(0, nums, k);
-    }
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
 
-    private int help(int idx, int[] nums, int k) {
-        // Base case: last index
-        if (idx == nums.length - 1) {
-            return nums[idx];
-        }
-        if (dp[idx] != null) {
-            return dp[idx];
-        }
+        Deque<Integer> dq = new ArrayDeque<>();
+        dq.add(0);
 
-        int max = Integer.MIN_VALUE;
-
-        // Try all jumps from idx+1 to idx+k
-        for (int j = idx + 1; j <= idx + k && j < nums.length; j++) {
-            int val = help(j, nums, k);
-            if (val != Integer.MIN_VALUE) {
-                max = Math.max(max, val);
+        for (int i = 1; i < n; i++) {
+            
+            if (dq.peekFirst() < i - k) {
+                dq.pollFirst();
             }
+            
+            dp[i] = nums[i] + dp[dq.peekFirst()];
+
+            while (!dq.isEmpty() && dp[dq.peekLast()] <= dp[i]) {
+                dq.pollLast();
+            }
+
+            dq.addLast(i);
         }
 
-        dp[idx] = nums[idx] + max;
-        return dp[idx];
+        return dp[n - 1];
     }
 }
