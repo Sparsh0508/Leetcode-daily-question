@@ -1,9 +1,9 @@
 class Solution {
 
-    private int[][] grid;
-    private Integer[][][] memo;
-    private int n;
-    private static final int NEG_INF = -1_000_000_000;
+    public int[][] grid;
+    public Integer[][][] memo;
+    public int n;
+    public  int NEG_INF = -1_000_000_000;
 
     public int cherryPickup(int[][] grid) {
         this.grid = grid;
