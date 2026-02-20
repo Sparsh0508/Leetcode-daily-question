@@ -1,39 +1,36 @@
 class Solution {
     public boolean canFinish(int n, int[][] edges) {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        boolean[] inRecursion = new boolean[n];
+        boolean [] visit = new boolean[n]; 
         for(int i = 0;i<n;i++){
             adj.add(new ArrayList<>());
         }
-        int[] indeg = new int[n];
         for(int[] edge : edges){
             int u = edge[0];
             int v = edge[1];
 
             adj.get(v).add(u);
-            indeg[u]++;
         }
-        Queue<Integer> q = new LinkedList<>();
         for(int i = 0;i<n;i++){
-            if(indeg[i] == 0){
-                q.offer(i);
+            if(!visit[i] && isCycleDetect(adj,i,visit,inRecursion)){
+                return false;
             }
         }
-        int visit = 0;
+        return true;
+    }
+    public static boolean isCycleDetect(ArrayList<ArrayList<Integer>> adj,int node,boolean[] visit,boolean[] inRecursion){  
+        visit[node] = true;
+        inRecursion[node] = true;
 
-        while(!q.isEmpty()){
-            int node = q.poll();
-            visit++;
-
-            for(int nei : adj.get(node)){
-                indeg[nei]--;
-                if(indeg[nei] == 0){
-                    q.offer(nei);
-                }
+        for(int nei : adj.get(node)){
+            if(!visit[nei] && isCycleDetect(adj,nei,visit,inRecursion)) {
+                return true;
+            }else if(inRecursion[nei]){
+                return true;
             }
         }
-        return visit == n;
-
-
-
+        inRecursion[node] = false;
+        return false;
     }
 }
