@@ -8,7 +8,10 @@ class Solution {
             graph.get(i[0]).add(i[1]);
             graph.get(i[1]).add(i[0]);
         }
-        return bfs(graph,src,dest);
+        // return bfs(graph,src,dest);
+
+        boolean[] vis = new boolean[graph.size()];
+        return dfs(graph,src,dest,vis);
     }
     public static boolean bfs(List<List<Integer>> graph,int src,int dest){
         boolean[] visit = new boolean[graph.size()];
@@ -24,6 +27,21 @@ class Solution {
                 if(!visit[i]){
                     q.add(i);
                     visit[i] = true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean dfs(List<List<Integer>> graph,int src,int dest,boolean[] vis){
+        if(src == dest){
+            return true;
+        }
+        vis[src] = true;
+        for(int nei : graph.get(src)){
+            if(!vis[nei]){
+                if(dfs(graph,nei,dest,vis)){
+                    return true;
                 }
             }
         }
