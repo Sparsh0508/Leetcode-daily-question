@@ -10,7 +10,6 @@ class Solution {
 
             adj.get(v).add(u);
         }
-        System.out.print(adj);
         long max = 0;
         int ans = 0;
         for(int i= 0;i<adj.size();i++){
