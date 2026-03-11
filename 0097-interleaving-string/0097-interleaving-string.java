@@ -3,17 +3,14 @@ class Solution {
         if(s1.length() + s2.length() != s3.length()){
             return false;
         }
-        int[][] dp = new int[s1.length()+1][s2.length()+1];
-        for(int[] arr : dp){
-            Arrays.fill(arr,-1);
-        }
+        Integer[][] dp = new Integer[s1.length()+1][s2.length()+1];
         return help(0,0,s1,s2,s3,dp);
     }
-    public static boolean help(int i,int j ,String s1,String s2,String s3,int[][] dp){
+    public static boolean help(int i,int j ,String s1,String s2,String s3,Integer[][] dp){
         if(i == s1.length() && j == s2.length()){
             return true;
         }
-        if(dp[i][j] != -1){
+        if(dp[i][j] != null){
             return dp[i][j] == 1;
         }
         boolean found = false;
