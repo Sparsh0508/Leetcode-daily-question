@@ -1,40 +1,23 @@
 class Solution {
-    public List<Boolean> checkIfPrerequisite(int n, int[][] req, int[][] q) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for(int i = 0;i<n;i++){
-            adj.add(new ArrayList<>());
+    public List<Boolean> checkIfPrerequisite(int n, int[][] pre, int[][] queries) {
+        boolean[][] reach = new boolean[n][n];
+
+        for(int[] p : pre){
+            reach[p[0]][p[1]] = true;
         }
-        for(int[] edge : req){
-            int u = edge[0];
-            int v = edge[1];
-            adj.get(u).add(v);
-        }
-        List<Boolean> res = new ArrayList<>();
-        for(int i = 0;i<q.length;i++){
-            int src = q[i][0];
-            int dest = q[i][1];
-            boolean isPath = check(adj,src,dest,n);
-            res.add(isPath);
-        }
-        return res;
-    }
-    public static boolean check(ArrayList<ArrayList<Integer>> adj,int src,int dest,int n){
-        Queue<Integer> q = new LinkedList<>();
-        boolean[] vis = new boolean[n];
-        q.add(src);
-        vis[src] = true;
-        while(!q.isEmpty()){
-            int u = q.poll();
-            if(u == dest){
-                return true;
-            }
-            for(int nei : adj.get(u)){
-                if(!vis[nei]){
-                    q.add(nei);
-                    vis[nei] = true;
+        for(int k = 0;k<n;k++){
+            for(int i = 0;i<n;i++){
+                for(int j = 0;j<n;j++){
+                    if(reach[i][k] && reach[k][j]){
+                        reach[i][j] = true;
+                    }
                 }
             }
         }
-        return false;
+        List<Boolean> ans = new ArrayList<>();
+        for(int[] q : queries){
+            ans.add(reach[q[0]][q[1]]);
+        }
+        return ans;
     }
 }
