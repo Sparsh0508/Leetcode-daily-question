@@ -1,21 +1,13 @@
 class Solution {
-    Integer[] dp;
     public int minimumCoins(int[] prices) {
-        dp = new Integer[prices.length];
-        return help(prices,0);
-    }
-    public int help(int[] arr,int idx){
-        if(idx >= arr.length){
-            return 0;
+        int n = prices.length-1;
+        for(int i = n/2;i>0;i--){
+            int val = prices[2*i];
+            for(int j = i;j<2*i;j++){
+                val = Math.min(val,prices[j]);
+            } 
+            prices[i-1] += val;
         }
-        if(dp[idx] != null){
-            return dp[idx];
-        }
-        int ans = Integer.MAX_VALUE;
-        int next = idx+idx+2;
-        for(int j = idx+1;j<=next;j++){
-            ans = Math.min(ans,help(arr,j));
-        }
-        return dp[idx] = ans + arr[idx];
+        return prices[0];
     }
 }
