@@ -1,37 +1,28 @@
 class Solution {
-    static Integer[][][][][] dp;
+    Integer[][][] dp;
+
     public int minimumDistance(String word) {
-        dp = new Integer[301][7][7][7][7];
-        return solve(word,0,-1,-1,-1,-1);
+        int n = word.length();
+        dp = new Integer[n][27][27]; 
+        return solve(word, 0, 26, 26);
     }
-    public static int solve(String word,int i,int x1,int y1,int x2,int y2){
-        if(i >= word.length()){
-            return 0;
-        }
-        if(dp[i][x1+1][y1+1][x2+1][y2+1] != null){
-            return dp[i][x1+1][y1+1][x2+1][y2+1];
-        }
-        int[] pair = getCord(word.charAt(i));
-        int x = pair[0];
-        int y = pair[1];
-        if(x1 == -1 && y1 == -1 && x2 == -1 && y2 == -1){
-            return dp[i][x1+1][y1+1][x2+1][y2+1] = solve(word,i+1,x,y,x2,y2);
-        }
-        if(x2 == -1 && y2 == -1){
-            int move1 = solve(word,i+1,x1,y1,x,y);
-            int move2 = getDist(x1,y1,x,y) + solve(word,i+1,x,y,x2,y2);
-            return dp[i][x1+1][y1+1][x2+1][y2+1] = Math.min(move1,move2);
-        }
-        
-        int move1 = getDist(x1,y1,x,y) + solve(word,i+1,x,y,x2,y2);
-        int move2 = getDist(x2,y2,x,y) + solve(word,i+1,x1,y1,x,y);
-        return dp[i][x1+1][y1+1][x2+1][y2+1] = Math.min(move1,move2);
+
+    public int solve(String word, int i, int f1, int f2) {
+        if (i == word.length()) return 0;
+
+        if (dp[i][f1][f2] != null) return dp[i][f1][f2];
+
+        int curr = word.charAt(i) - 'A';
+        int cost1 = dist(f1, curr) + solve(word, i + 1, curr, f2);
+        int cost2 = dist(f2, curr) + solve(word, i + 1, f1, curr);
+
+        return dp[i][f1][f2] = Math.min(cost1, cost2);
     }
-    public static int[] getCord(char ch){
-        int curr = ch -'A'; 
-        return new int[]{curr/6,curr%6};
-    }
-    public static int getDist(int x1,int y1,int x2,int y2){
-        return Math.abs(x1-x2) + Math.abs(y1-y2);
+
+    public int dist(int a, int b) {
+        if (a == 26) return 0; 
+        int x1 = a / 6, y1 = a % 6;
+        int x2 = b / 6, y2 = b % 6;
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
 }
