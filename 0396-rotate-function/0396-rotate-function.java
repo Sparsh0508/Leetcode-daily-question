@@ -10,13 +10,10 @@ class Solution {
       }  
 
       int max=f;
-      for(int i=n-1;i>0;i--)
-      {
+      for(int i=n-1;i>0;i--){
           max=Math.max(max,f+sum-(n*nums[i]));
           f=f+sum-(n*nums[i]);
-
       }
-
       return max;
     }
 }
