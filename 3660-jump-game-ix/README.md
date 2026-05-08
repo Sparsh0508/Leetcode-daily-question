@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/jump-game-ix">3660. Jump Game IX</a></h2><h3>Medium</h3><hr><p>You are given an integer array <code>nums</code>.</p>
+<h2><a href="https://leetcode.com/problems/jump-game-ix/?envType=daily-question&envId=2026-05-07">3660. Jump Game IX</a></h2><h3>Medium</h3><hr><p>You are given an integer array <code>nums</code>.</p>
 
 <p>From any index <code>i</code>, you can jump to another index <code>j</code> under the following rules:</p>
 
