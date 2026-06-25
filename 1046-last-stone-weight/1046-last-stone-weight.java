@@ -1,20 +1,21 @@
 class Solution {
     public int lastStoneWeight(int[] stones) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
+        ArrayList<Integer> al = new ArrayList<>();
         for(int num : stones){
-            pq.add(num);
-        }   
-        while(!pq.isEmpty()){
-            if(pq.size() == 1){
-                return pq.remove();
-            }
-            int y = pq.remove();
-            int x = pq.remove();
-            if(x != y){
-                int sub = y-x;
-                pq.add(sub);
+            al.add(num);
+        }
+        while(al.size() > 1){
+            int m1 = Collections.max(al);
+            al.remove(Integer.valueOf(m1));
+            int m2 = Collections.max(al);
+            al.remove(Integer.valueOf(m2));
+            if(m1 != m2){
+                al.add(m1-m2);
             }
         }
-        return 0;
+        if(al.size() == 0){
+            return 0;
+        }
+        return al.get(0);
     }
 }
